@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Mind's Girls - Cadastro</title>
+
+    <script src="./js/sessao.js"></script>
+    <link
+      rel="icon"
+      href="./assets/img/imagens/Mind_s_Girls-removebg-preview.png"
+    />
+    <link rel="stylesheet" href="assets/css/cad.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+  </head>
+
+  <body>
+    <!--header inicio-->
+    <div class="header">
+      <div id="container">
+        <button onclick="voltar()" id="bVoltar">
+          <img src="./assets/img/imagens/seta.png" width="50px" />
+        </button>
+        <h1 class="titulo">Mind's Girls</h1>
+      </div>
+    </div>
+
+    <div class="blocos">
+      <div>
+        <img src="./assets/img/chemistry lab-amico.png" alt="" width="500px" />
+      </div>
+
+      <div class="cad">
+        <h1>CADASTRO</h1>
+
+        Nome:<br />
+        <input
+          type="text"
+          id="input_nome"
+          class="info"
+          placeholder="ex: Bianca"
+        />
+        <br /><br />
+        E-mail:<br />
+        <input
+          type="text"
+          id="input_email"
+          class="info"
+          placeholder="ex: bianca@gmail.com "
+        />
+
+        <br /><br />
+        CPF:<br />
+        <input
+          type="text"
+          id="input_cpf"
+          class="info"
+          placeholder="somente números"
+        />
+        <br /><br />
+
+        Senha:<br />
+        <input type="password" id="input_senha" class="info" />
+
+        <br /><br />
+        Confimação da senha:<br />
+        <input
+          type="password"
+          id="input_confirmacao"
+          class="info"
+          placeholder=""
+        />
+        <br /><br />
+        Já possui conta? <a href="login.html"><b>Entrar</b></a> <br /><br />
+        <button class="botao" onclick="cadastrar()">Cadastrar</button>
+      </div>
+    </div>
+
+    <div></div>
+  </body>
+</html>
+
+<script>
+  function voltar() {
+    window.location.href = "index.html";
+  }
+
+  function cadastrar() {
+    //Recupere o valor da nova input pelo nome do id
+    // Agora vá para o método fetch logo abaixo
+    const nome = input_nome.value;
+    const email = input_email.value;
+    const cpf = input_cpf.value;
+    const senha = input_senha.value;
+    const confirmacao = input_confirmacao.value;
+
+    
+    if (
+      nome == "" ||
+      email == "" ||
+      cpf == "" ||
+      senha == "" ||
+      confirmacao == ""
+    ) {
+      alert("Todos os campos devem ser preenchidos");
+    } else {
+      if (nome.length < 3) {
+        alert("O nome deve possuir mais do que 3 caracteres");
+        return;
+      }
+
+      if (!email.includes("@") && !email.includes(".")) {
+        alert('O email deve conter "@" e "."');
+        return;
+      }
+
+      if (cpf.length != 11) {
+        alert("Erro no cpf");
+        return;
+      }
+
+      if (!senha.includes("@")&&!senha.includes("*")&& !senha.includes("#") ) {
+        alert(
+          'A senha deve incluir um caractere especial entre "@", "#" ou "*".'
+        )
+        return;
+      } else {
+        if (senha.length < 8) {
+          alert("A senha deve ter pelo menos 8 caracteres.");
+          return;
+        }
+      }
+    
+      if (senha !== confirmacao) {
+        alert("A confirmação de senha não corresponde à senha digitada.");
+        return;
+      }
+    
+
+    // Enviando o valor da nova input
+    fetch("/usuarios/cadastrar", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        // crie um atributo que recebe o valor recuperado aqui
+        // Agora vá para o arquivo routes/usuario.js
+        nomeServer: nome,
+        emailServer: email,
+        senhaServer: senha,
+        cpfServer: cpf,
+      }),
+    })
+      .then(function (resposta) {
+        console.log("resposta: ", resposta);
+
+        setTimeout(() => {
+          window.location = "login.html";
+        }, "1000");
+
+        finalizarAguardar();
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+        finalizarAguardar();
+      });
+
+    return false;
+  }}
+</script>

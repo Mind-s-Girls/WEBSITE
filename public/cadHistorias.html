@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cadastro de histórias</title>
+    <link rel="icon" href="./assets/img/imagens/Mind_s_Girls-removebg-preview.png">
+
+    <link rel="stylesheet" href="./assets/css/historias.css" />
+  </head>
+  <body>
+    <div class="header">
+      <div id="elementosC">
+        <button onclick="voltar()" id="bVoltar"><img src="./assets/img/imagens/seta.png" width="50px" ></button>
+        <span><i>Histórias</i></span>
+      </div>
+    </div>
+
+    <div class="corpo">
+      <div class="dados">
+        <span class="texDados">Endereço da imagem:<br /><br /> </span>
+          <input type="text" id="input_foto" class="input_dados"/>
+        <br /><br />
+        <span class="texDados">Nome Completo:<br /><br /> </span
+        ><input type="text" id="input_nome" class="input_dados" /> <br /><br />
+        <span class="texDados">Formação: <br /><br /></span
+        ><input type="text" id="input_prof" class="input_dados" /> <br /><br />
+        <span class="texDados">Nacionalidade:<br /><br /></span
+        ><input type="text" id="input_nacio" class="input_dados" /> <br /><br />
+        <span class="texDados">Nascimento: <br /><br /></span
+        ><input type="text" id="input_nascimento" class="input_dados" placeholder="ano-mês-dia" />
+        <br /><br />
+        <span class="texDados">Falecimento: <br /><br /></span
+        ><input type="text" id="input_falecimento" class="input_dados" placeholder="ano-mês-dia" />
+      </div>
+
+      <div class="bibliografia">
+        <br /><br />
+        - NOME - <br /><br /><br />
+        Subtítulo: <br /><input type="text" id="input_subT" /> <br /><br />
+        <span>Bibliografia:</span> <br /><input type="text" id="input_bio" />
+      <br><br>
+        <button onclick="adicionar()" class="botao">Adicionar</button>
+
+      </div>
+    </div>
+  </body>
+</html>
+
+
+<script>
+
+
+function voltar(){
+window.location.href="historias.html";
+
+}
+
+function adicionar(){
+
+  let endImg = input_foto.value
+let nomeCompleto = input_nome.value
+let formacao = input_prof.value
+let nacionalidade = input_nacio.value
+let nascimento = input_nascimento.value
+let falecimento = input_falecimento.value
+
+
+let subtitulo = input_subT.value
+let bio = input_bio.value
+
+
+if (
+  nomeCompleto == "" ||
+  formacao == "" ||
+  nacionalidade == "" ||
+  nascimento == "" ||
+  subtitulo=="" ||
+  bio ==""
+    ) {
+      alert("Todos os campos devem ser preenchidos");
+
+
+} else {
+  fetch("/usuarios/cadastrarHist", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        // crie um atributo que recebe o valor recuperado aqui
+        // Agora vá para o arquivo routes/usuario.js
+        endImgServer:endImg,
+        nomeServer: nomeCompleto,
+        formacaoServer: formacao,
+        nacionalidadeServer: nacionalidade,
+        nascimentoServer: nascimento,
+        falecimentoServer: falecimento,
+        subtituloServer: subtitulo,
+        bioServer: bio,
+      }),
+    })
+      .then(function (resposta) {
+        console.log("resposta: ", resposta);
+
+        setTimeout(() => {
+          window.location = "historias.html";
+        }, "1000");
+
+        finalizarAguardar();
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+        finalizarAguardar();
+      });
+
+    return false;
+
+}
+
+}
+
+
+
+
+</script>

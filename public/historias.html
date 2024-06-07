@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="assets/css/historias.css" />
+    <link rel="icon" href="./assets/img/imagens/Mind_s_Girls-removebg-preview.png">
+    <title>Histórias - Mind's Girls</title>
+  </head>
+  <body>
+    <div class="header">
+      <div id="elementos">
+        <button onclick="voltar()" id="bVoltar">
+          <img src="./assets/img/imagens/seta.png" width="50px" />
+        </button>
+        <span><i>Histórias</i></span>
+        <div>
+        <button onclick="irGraf()" class="bot">
+          <img src="./assets/img/imagens/grafico.png" width="50px" />
+          <button onclick="irCadHis()" class="bot">
+            <img src="./assets/img/imagens/adicionar.png" width="35px" />
+          </div>
+      </div>
+    </div>
+
+    <div class="repertorio">
+
+      <br>
+      <div id="reper">
+        <div class="container">
+          <img src="./assets/img/Ada Lovelace.png" class="fotos" /><br /><br />
+
+          <button class="nomes"><a href="./Ada.html">Ada Lovelace</a></button>
+        </div>
+
+        <div class="container">
+          <img src="./assets/img/Marie Curie.png" class="fotos" /><br /><br />
+          <button class="nomes"><a href="./Marie.html">Marie Curie</a></button>
+        </div>
+
+        <div class="container">
+          <img src="./assets/img/Rosa Franklin.png" class="fotos" /><br /><br />
+          <button class="nomes"><a href="./Rosa.html">Rosa Franklin</a></button>
+        <br>
+        </div>
+      </div>
+
+      <div id="lista">
+        Insira a senha: <input type="password" id="input_senha">
+       <button onclick="ir()" id="bIr">OK</button>
+      </div>
+
+
+    </div>
+
+    <div class="footer"></div>
+  </body>
+</html>
+
+<script>
+
+function voltar(){
+window.location.href="index.html";
+}
+
+function irGraf(){
+window.location.href="dashbord.html";
+}
+
+function irCadHis(){
+
+  lista.style.display='block'
+  
+  ir() 
+}
+
+function ir(){
+  let senha = Number(input_senha.value)
+
+  if (senha == 12345)
+{window.location.href="cadHistorias.html";
+}else {alert('Você não tem acesso a essa página!')}
+
+}
+
+</script>

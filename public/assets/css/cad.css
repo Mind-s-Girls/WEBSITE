@@ -1,0 +1,116 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+  width: 100%;
+  background-color: #57276a;
+}
+
+#container {
+  display: flex;
+  padding: 0 8px 8px 100px;
+  align-items:center ;
+  width: 50%;
+  justify-content: space-between;
+}
+
+.header {
+  display: flex;
+ background-color: #57276a;
+  border-bottom: 8px solid #3c1949;
+  width: 100%;
+  height: 100px;
+  align-items: center;
+
+}
+
+.titulo {
+  color: white;
+  font-weight: 500px;
+  font-size: 50px;
+}
+
+.navbar {
+  width: 400px;
+  display: flex;
+  color: white;
+  justify-content: space-between;
+  list-style: none;
+  font-size: 20px;
+  align-items: center;
+}
+
+.header .container {
+  justify-content: space-between;
+}
+
+.blocos {
+  background-color: #b482c7;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 8px solid #3c1949;
+
+}
+
+.cad {
+  background-color: #633374;
+  border-radius: 50px;
+  width: 450px;
+  height: 560px;
+  align-items: center;
+  text-align: center;
+  font-size: 18px;
+  color: #eed9f6;
+  font-weight: 300;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+}
+
+.login {
+  background-color: #633374;
+  border-radius: 30%;
+  width: 500px;
+  height: 400px;
+  align-items: center;
+  text-align: center;
+  font-size: 18px;
+  color: #eed9f6;
+  font-weight: 300;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+}
+
+.info {
+  border-radius: 10px;
+  width: 300px;
+  height: 24px;
+  background-color: #cfb3dd;
+
+  border: none;
+}
+
+a{
+  color: white;
+}
+
+.botao {
+  background-color: #b685c8;
+  color: #3c1949;
+  font-weight: bold;
+  border-radius: 15px;
+  width: 250px;
+  height: 50px;
+  border: none;
+  font-size: 20px;
+}
+
+#bVoltar{
+  border-radius: 10px;
+  width: 100px;
+  height: 50px;
+  background-color: #8852a3;
+  border: none;
+  color: #fff;
+  font-size: 15px;
+  font-weight: bold;
+}

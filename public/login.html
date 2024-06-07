@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>AquaTech | Login</title>
+
+    <script src="./js/sessao.js"></script>
+
+    <link rel="stylesheet" href="./assets/css/cad.css" />
+    <link
+      rel="icon"
+      href="./assets/img/imagens/Mind_s_Girls-removebg-preview.png"
+    />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+  </head>
+
+  <body>
+    <!--Header-->
+
+    <div class="header">
+      <div id="container">
+        <button onclick="voltar()" id="bVoltar">
+          <img src="./assets/img/imagens/seta.png" width="50px" />
+        </button>
+        <h1 class="titulo">Mind's Girls</h1>
+      </div>
+    </div>
+
+    <div class="blocos">
+      <div class="login">
+        <br /><br />
+        <h1>LOGIN</h1>
+
+        E-mail:<br />
+        <input type="text" id="input_email" class="info" />
+
+        <br /><br />
+        Senha:<br />
+        <input type="password" id="input_senha" class="info" />
+        <br /><br />
+        Ainda não possui conta? <a href="cadastro.html"><b>Cadastre-se</b></a>
+        <br /><br />
+        <button onclick="entrar()" class="botao">ENTRAR</button>
+      </div>
+
+      <div>
+        <img src=".//assets/img/Science-cuate.png" alt="" width="500px" />
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  function voltar() {
+    window.location.href = "index.html";
+  }
+
+  function entrar() {
+    const email = input_email.value;
+    const senha = input_senha.value;
+
+    if (email == "" || senha == "") {
+      alert("Todos os campos devem ser preenchidos");
+      finalizarAguardar();
+      return false;
+    } else {
+      setInterval(5000);
+    }
+
+    console.log("FORM LOGIN: ", email);
+    console.log("FORM SENHA: ", senha);
+
+    fetch("/usuarios/autenticar", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        emailServer: email,
+        senhaServer: senha,
+      }),
+    })
+      .then(function (resposta) {
+        console.log("ESTOU NO THEN DO entrar()!");
+
+        if (resposta.ok) {
+          console.log(resposta);
+
+          resposta.json().then((json) => {
+            console.log(json);
+            console.log(JSON.stringify(json));
+            sessionStorage.EMAIL_USUARIO = json.email;
+
+            sessionStorage.NOME_USUARIO = json.nome;
+            sessionStorage.ID_USUARIO = json.idUsuario;
+
+            setTimeout(function () {
+              window.location = "historias.html";
+            }, 1000); // apenas para exibir o loading
+          });
+        } else {
+          console.log("Houve um erro ao tentar realizar o login!");
+
+          resposta.text().then((texto) => {
+            console.error(texto);
+          });
+        }
+      })
+      .catch(function (erro) {
+        console.log(erro);
+      });
+
+    return false;
+  }
+</script>

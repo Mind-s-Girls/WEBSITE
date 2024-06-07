@@ -1,0 +1,226 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+  width: 100%;
+}
+
+
+
+.header {
+  position: fixed;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: row;
+  background-color: #57276a;
+  width: 100%;
+  height: 80px;
+  color: white;
+  font-weight: bold;
+  font-size: 45px;
+  text-align:center;
+  align-items: center;
+  border-bottom: 8px solid #3c1949;
+}
+
+#elementos{
+  display: flex;
+  padding: 0 10px 10px 100px;
+  align-items:center ;
+  width: 50%;
+  justify-content: space-between;
+}
+
+#elementosH{
+  display: flex;
+  padding: 0 100px 10px 100px;
+  align-items:center ;
+  width: 100%;
+  justify-content: space-between;
+}
+
+#bVoltar{
+  border-radius: 10px;
+  width: 100px;
+  height: 50px;
+  background-color: #8852a3;
+  border: none;
+  color: #fff;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.repertorio {
+  background-color: #b685c8;
+  height: 580px;
+  padding: 2px 0 20px 0;
+}
+
+.reper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  text-align: center;
+  justify-content: space-between;
+}
+
+.container {
+  align-items: center;
+  justify-content: space-around;
+  padding: 20px 45px 20px 45px;
+}
+
+.nomes {
+  background-color: #8f52a8;
+  border-radius: 30px;
+  border: none;
+  width: 245px;
+  height: 45px;
+  font-size: 25px;
+  text-align: center;
+  color: white;
+  border-bottom: 5px solid #3c1949;
+}
+
+.fotos {
+  border-radius: 100%;
+  width: 190px;
+  height: 190px;
+  border: 6px solid #3c1949;
+}
+
+.footer {
+  background-color: #57276a;
+  width: 100%;
+  height: 17px;
+}
+
+.corpo {
+ display:flex;
+flex-direction: column;
+}
+
+.dados {
+  position: fixed;
+  width: 300px;
+  height: 563px;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(213, 173, 231);
+  padding: 50px 5px 0 30px;
+  text-align: justify;
+  justify-content: flex-start;
+  border-right: 5px solid #57276a;
+}
+
+
+
+
+.bibliografia {
+  text-align: justify;
+  padding: 20px;
+  width: 1000px;
+  align-items: center;
+  padding: 50px 0 0  400px  ;
+  font-size: 20px;
+  color: #3c1949;
+}
+
+
+.input_dados{
+    border-radius: 5px;
+    width: 250px;
+    height: 23px;
+    background-color: #8852a3;
+    border: none;
+    color: #fff;
+    font-size: 15px;
+}
+
+/* Esconde o input */
+input[type='file'] {
+  display: none
+}
+
+/* Aparência que terá o seletor de arquivo */
+label {
+  background-color: #57276a;
+  width: 300px;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  margin: 10px;
+  padding: 6px 20px
+}
+
+
+#input_subT{
+  background-color: rgb(149, 103, 171);
+  width: 900px;
+  height: 30px;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  margin: 10px;
+  border: none;
+  padding: 6px 20px
+  
+}
+
+#input_bio{
+  background-color: rgb(149, 103, 171);
+  width: 900px;
+  height: 200px;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  margin: 10px;
+  border: none;
+  padding: 6px 20px;
+}
+
+.texDados{
+color: #3c1949;
+font-weight: bold;
+  font-size: 16px;
+
+}
+
+.botao{
+  background-color: #57276a;
+  width: 200px;
+  height: 60px;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  padding: 6px 20px
+
+}
+
+
+#pesquisa{
+  background-image: url(../img/imagens/lupa.png);
+  background-size: 1.3em;
+ padding-left: 30px;
+  background-repeat: no-repeat;
+  background-position: left;
+  background-color: #8f52a8;
+  border-radius: 30px;
+  border: none;
+  width: 200px;
+  height: 45px;
+  font-size: 20px;
+  color: white;
+border: none;
+
+}
+
+#pesquisa::placeholder{
+  color: white;
+  font-size: 15px;
+
+}

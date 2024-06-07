@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./assets/css/dash.css" />
+    <link
+      rel="icon"
+      href="./assets/img/imagens/Mind_s_Girls-removebg-preview.png"
+    />
+
+    <title>Dashbord</title>
+  </head>
+  <body>
+    <div class="header">
+      <div id="elementos">
+        <button onclick="voltar()" id="bVoltar">
+          <img src="./assets/img/imagens/seta.png" width="50px" />
+        </button>
+        <span><i>MULHERES DA CIÊNCIA</i></span>
+      </div>
+    </div>
+
+    <div class="corpo">
+      <div class="dados">
+        <br />
+        <span class="kpi"
+          ><p style="font-size: 46px"><b>33,3%</b></p>
+          dos pesquisadores do mundo são mulheres</span
+        >
+        <br /><br /><br />
+        <span class="kpi"
+          ><p style="font-size: 46px"><b>3</b></p>
+          Histórias registradas</span
+        >
+      </div>
+
+      <div class="conteudo">
+        <h1>Nossas Cientistas</h1>
+        <p>Conheça a diversidade das mulheres de nossas histórias.</p>
+        <div id="graficos">
+          <div id="graf_pro"><canvas id="formacao"></canvas></div>
+          <br /><br />
+          <div id="graf_nac"><canvas id="nacionalidade"></canvas></div>
+        </div>
+      </div>
+
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    </div>
+  </body>
+</html>
+
+<script>
+  function voltar() {
+    window.location = "historias.html";
+  }
+
+  new Chart(profissao, {
+    type: "pie",
+    data: {
+      labels: ["Química", "Biologia", "Matemática", "Astronomia"],
+      datasets: [
+        {
+          label: "My First Dataset",
+          data: [2, 1, 1, 0],
+          backgroundColor: [
+            "rgb(255, 99, 132)",
+            "rgb(54, 162, 235)",
+            "#57276a",
+            "#8852a3",
+          ],
+          hoverOffset: 4,
+        },
+      ],
+    },
+  });
+
+  new Chart(nacionalidade, {
+    type: "bar",
+    data: {
+      labels: [
+        "Alemanha",
+        "Inglaterra",
+        "Polônia",
+        "EUA",
+        "Espanha",
+        "Brasil",
+        "Outros",
+      ],
+      datasets: [
+        {
+          label: "Nacionalidades",
+          data: [0, 2, 1, 0, 0, 0, 0],
+          backgroundColor: ["#8852a3"],
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+    },
+  });
+
+  function obterDadosGrafico(idCientista) {
+    alterarTitulo(idCientista);
+
+    if (proximaAtualizacao != undefined) {
+      clearTimeout(proximaAtualizacao);
+    }
+
+    fetch(`/medidas/ultimas/${idCientista}`, { cache: "no-store" })
+      .then(function (response) {
+        if (response.ok) {
+          response.json().then(function (resposta) {
+            console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+            resposta.reverse();
+
+            plotarGrafico(resposta, idCientista);
+          });
+        } else {
+          console.error("Nenhum dado encontrado ou erro na API");
+        }
+      })
+      .catch(function (error) {
+        console.error(
+          `Erro na obtenção dos dados p/ gráfico: ${error.message}`
+        );
+      });
+  }
+
+  // Esta função *plotarGrafico* usa os dados capturados na função anterior para criar o gráfico
+  // Configura o gráfico (cores, tipo, etc), materializa-o na página e,
+  // A função *plotarGrafico* também invoca a função *atualizarGrafico*
+  function plotarGrafico(resposta, idCientista) {
+    console.log("iniciando plotagem do gráfico...");
+
+    // Criando estrutura para plotar gráfico - dados
+    let dadosP = {
+      labels: ["Química", "Biologia", "Programação", "Astronomia"],
+      datasets: [
+        {
+          label: "Profissão",
+          data: [],
+          fill: false,
+          backgroundColor: [
+            "rgb(255, 99, 132)",
+            "rgb(54, 162, 235)",
+            "#57276a",
+            "#8852a3",
+          ],
+          tension: 0.1,
+        },
+      ],
+    };
+
+    let dadosN = {
+      labels: [
+        "Alemanha",
+        "Inglaterra",
+        "Polônia",
+        "EUA",
+        "Espanha",
+        "Brasil",
+        "Outros",
+      ],
+      datasets: [
+        {
+          label: "Nacionalidade",
+          data: [],
+          fill: false,
+          backgroundColor: ["#8852a3"],
+          tension: 0.1,
+        },
+      ],
+    };
+
+    console.log("----------------------------------------------");
+    console.log(
+      'Estes dados foram recebidos pela funcao "obterDadosGrafico" e passados para "plotarGrafico":'
+    );
+    console.log(resposta);
+
+    // Inserindo valores recebidos em estrutura para plotar o gráfico
+    for (i = 0; i < resposta.length; i++) {
+      var registro = resposta[i];
+      labels.push(registro.momento_grafico);
+      dados.datasets[0].data.push(registro.profissao);
+      dados.datasets[1].data.push(registro.nacionalidade);
+    }
+
+    console.log("----------------------------------------------");
+    console.log("O gráfico será plotado com os respectivos valores:");
+    console.log("Labels:");
+    console.log(labels);
+    console.log("Dados:");
+    console.log(dados.datasets);
+    console.log("----------------------------------------------");
+
+    // Criando estrutura para plotar gráfico - config
+    const configP = {
+      type: "pie",
+      data: dados,
+    };
+
+    const configN = {
+      type: "bar",
+      data: dados,
+    };
+
+    // Adicionando gráfico criado em div na tela
+
+    const profissao = new Chart(
+      document.getElementById(`profissao ${idCientista}`),
+      configP
+    );
+
+    const nacionalidade = new Chart(
+      document.getElementById(`nacionalidade ${idCientista}`),
+      configN
+    );
+
+    setTimeout(() => atualizarGrafico(idCientista, dados, myChart), 2000);
+  }
+
+  // Esta função *atualizarGrafico* atualiza o gráfico que foi renderizado na página,
+  // buscando a última medida inserida em tabela contendo as capturas,
+
+  //     Se quiser alterar a busca, ajuste as regras de negócio em src/controllers
+  //     Para ajustar o "select", ajuste o comando sql em src/models
+  function atualizarGrafico(idCientista, dados, profissao, nacionalidade) {
+    fetch(`/dados/tempo-real/${idCientista}`, { cache: "no-store" })
+      .then(function (response) {
+        if (response.ok) {
+          response.json().then(function (novoRegistro) {
+            obterdados(idCientista);
+            // alertar(novoRegistro, idCientista);
+            console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
+            console.log(`Dados atuais do gráfico:`);
+            console.log(dados);
+
+            let avisoCaptura = document.getElementById(
+              `avisoCaptura${idCientista}`
+            );
+            avisoCaptura.innerHTML = "";
+
+            if (
+              novoRegistro[0].momento_grafico ==
+              dados.labels[dados.labels.length - 1]
+            ) {
+              console.log(
+                "---------------------------------------------------------------"
+              );
+              console.log(
+                "Como não há dados novos para captura, o gráfico não atualizará."
+              );
+              avisoCaptura.innerHTML =
+                "<i class='fa-solid fa-triangle-exclamation'></i> Foi trazido o dado mais atual capturado pelo sensor. <br> Como não há dados novos a exibir, o gráfico não atualizará.";
+              console.log("Horário do novo dado capturado:");
+              console.log(novoRegistro[0].momento_grafico);
+              console.log("Horário do último dado capturado:");
+              console.log(dados.labels[dados.labels.length - 1]);
+              console.log(
+                "---------------------------------------------------------------"
+              );
+            } else {
+              // tirando e colocando valores no gráfico
+
+              dados.datasets[0].data.push(novoRegistro[0].profissao); // incluir uma nova medida de umidade
+
+              dados.datasets[1].data.push(novoRegistro[0].nacionalidade); // incluir uma nova medida de temperatura
+
+              profissao.update();
+              nacionalidade.update();
+            }
+
+            // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
+            proximaAtualizacao = setTimeout(
+              () =>
+                atualizarGrafico(idCientista, dados, profissao, nacionalidade),
+              2000
+            );
+          });
+        } else {
+          console.error("Nenhum dado encontrado ou erro na API");
+          // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
+          proximaAtualizacao = setTimeout(
+            () => atualizarGrafico(idAquario, dados, profissao, nacionalidade),
+            2000
+          );
+        }
+      })
+      .catch(function (error) {
+        console.error(
+          `Erro na obtenção dos dados p/ gráfico: ${error.message}`
+        );
+      });
+  }
+</script>
