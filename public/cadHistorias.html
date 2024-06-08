@@ -82,7 +82,7 @@ if (
 
 
 } else {
-  fetch("/usuarios/cadastrarHist", {
+  fetch("/historias/cadastrarHist", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -103,15 +103,13 @@ if (
       .then(function (resposta) {
         console.log("resposta: ", resposta);
 
-        setTimeout(() => {
-          window.location = "historias.html";
-        }, "1000");
+     //   setTimeout(() => {
+       //   window.location = "historias.html";
+        //}, "2000");
 
-        finalizarAguardar();
       })
       .catch(function (resposta) {
         console.log(`#ERRO: ${resposta}`);
-        finalizarAguardar();
       });
 
     return false;

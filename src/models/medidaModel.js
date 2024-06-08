@@ -1,8 +1,33 @@
 var database = require("../database/config");
 
-function buscarUltimasMedidas(idAquario, limite_linhas) {
+function buscarQtdHist() {
 
-    var instrucaoSql = `select nacionalidade, count(nacionalidade) 'Nascidas no mesmo País'
+    var instrucaoSql = `select  count(idCientista) 'quantidade'
+    from cientista`;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function buscarFormacao() {
+
+    var instrucaoSql = `select form.Formacao Formação, count(formC.fkFormacao)
+from Cientista cien
+join Formacao_Cientista formC
+on cien.idCientista= formC.fkCientista
+join Formacao form
+on form.idFormacao= formC.fkFormacao
+group by formC.fkFormacao`;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+
+
+function buscarNacionalidade() {
+
+    var instrucaoSql = `select nacionalidade, count(nacionalidade)
     from cientista
     GROUP BY nacionalidade`;
 
@@ -10,21 +35,11 @@ function buscarUltimasMedidas(idAquario, limite_linhas) {
     return database.executar(instrucaoSql);
 }
 
-function buscarMedidasEmTempoReal(idAquario) {
 
-    var instrucaoSql = `SELECT 
-        dht11_temperatura as temperatura, 
-        dht11_umidade as umidade,
-                        DATE_FORMAT(momento,'%H:%i:%s') as momento_grafico, 
-                        fk_aquario 
-                        FROM medida WHERE fk_aquario = ${idAquario} 
-                    ORDER BY id DESC LIMIT 1`;
-
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
-}
 
 module.exports = {
-    buscarUltimasMedidas,
-    buscarMedidasEmTempoReal
+    buscarQtdHist,
+    buscarFormacao,
+    buscarNacionalidade
 }
+

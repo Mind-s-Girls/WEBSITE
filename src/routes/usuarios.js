@@ -12,8 +12,5 @@ router.post("/autenticar", function (req, res) {
     usuarioController.autenticar(req, res);
 });
 
-router.post("/cadastrarHist", function (req, res) {
-    usuarioController.cadastrarHist(req, res);
-});
 
 module.exports = router;
